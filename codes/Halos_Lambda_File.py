@@ -48,3 +48,19 @@ for ih in xrange(Nhalos):
     f.write( "%d\t%1.5e\t%1.5e\t%1.5e\t%d\t%d\t%d\n"%( halos[0,ih], eig1[i,j,k], eig2[i,j,k], eig3[i,j,k], i, j, k ) )
     
 f.close()
+
+#Testing
+#n = 256
+#voids = np.loadtxt("./index.dat")
+#voids.resize(n,n,n)
+#voids = voids.transpose()
+
+#colors = np.loadtxt( '%s%s%s/%d/E_GH%s_%s.dat'%(foldglobal,simulation,web,N_sec,smooth,catalog), usecols=(2,) )
+
+#plt.imshow( np.transpose(eig2[0,::,::-1]), extent = (0,250,0,250) )
+#vmin = eig1[0].min()
+#vmax = eig1[0].max()
+#plt.scatter( halos[ 2, halos[1]<2 ], halos[ 3, halos[1]<2 ], c=colors[halos[1]<2], color="black", vmin=vmin, vmax=vmax )
+#plt.xlim( (0,250) )
+#plt.ylim( (0,250) )
+#plt.show()

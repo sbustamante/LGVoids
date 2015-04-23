@@ -22,9 +22,52 @@ from matplotlib.patches import Ellipse
 foldglobal = '../../CosmicData/'
 
 
-#==================================================================================================
-#			FUNCTIONS
-#==================================================================================================
+#..................................................................................................
+#Read a vectorial binary field
+#..................................................................................................
+def read_CIC_vector(filename):
+    print "Reading eigenvector file"
+    f = open(filename, "rb")
+    dumb = f.read(38)
+
+    dumb = f.read(4)
+    n_x = f.read(4)
+    n_y = f.read(4)
+    n_z = f.read(4)
+    nodes = f.read(4)
+    x0 = f.read(4)
+    y0 = f.read(4)
+    z0 = f.read(4)
+    dx = f.read(4)
+    dy = f.read(4)
+    dz = f.read(4)
+    dumb = f.read(4)
+
+    n_x = (unpack('i', n_x))[0]
+    n_y = (unpack('i', n_y))[0]
+    n_z = (unpack('i', n_z))[0]
+    nodes = (unpack('i', nodes))[0]
+    dx = (unpack('f', dx))[0]
+    dy = (unpack('f', dy))[0]
+    dz = (unpack('f', dz))[0]
+    x0 = (unpack('f', x0))[0]
+    y0 = (unpack('f', y0))[0]
+    z0 = (unpack('f', z0))[0]
+    print n_x, n_y, n_z, nodes, dx, dy, dz
+
+    total_nodes = 3 * n_x * n_y *n_z
+    dumb = f.read(4)
+    array_data = f.read(total_nodes*4)
+    dumb = f.read(4)
+    format_s = str(total_nodes)+'f'
+    array_data = unpack(format_s, array_data)
+    f.close()
+    array_data  = np.array(array_data)
+    new_array_data = np.reshape(array_data, (3,n_x,n_y,n_z), order='F')
+    vec = new_array_data[:,0,0,0]
+    print "vec", vec, sum(vec*vec)
+
+    return new_array_data
 
 #..................................................................................................
 #Read a scalar binary field
